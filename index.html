@@ -1,185 +1,249 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Lucía · Dashboard | Dental Pro Cobertura</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lucía · Dashboard · Dental Pro Cobertura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-  :root{
-    --bg:#F2F5F4;
-    --sidebar:#0F2C29;
-    --card:#FFFFFF;
-    --ink:#16231F;
-    --muted:#6E7E7B;
-    --border:#E3E8E6;
-    --teal:#1FAE9B;
-    --teal-soft:rgba(31,174,155,.14);
-    --amber:#F2A154;
-    --amber-soft:rgba(242,161,84,.18);
-    --radius:12px;
-    --shadow:0 6px 20px -10px rgba(15,33,29,.18);
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;}
-  body{
-    background:var(--bg);color:var(--ink);
-    font-family:'Manrope',system-ui,-apple-system,sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
-  .app{display:grid;grid-template-columns:264px 1fr;min-height:100vh;}
+/* ===================================================================
+   TOKENS — blue/white professional palette
+=================================================================== */
+:root{
+  --bg:       #F0F4F8;
+  --sidebar:  #0B1D3A;   /* deep navy */
+  --s-hover:  #162D55;
+  --s-active: #1A5FC8;   /* bright blue accent */
+  --s-text:   #A8BDD4;
+  --s-text2:  #D0DFF0;
+  --card:     #FFFFFF;
+  --ink:      #0B1D3A;
+  --ink2:     #4A6080;
+  --border:   #E2EAF2;
+  --blue:     #1A5FC8;   /* primary = Equipo / dentro */
+  --blue-soft:rgba(26,95,200,.10);
+  --cyan:     #0EA5E9;   /* secondary = Lucía / fuera */
+  --cyan-soft:rgba(14,165,233,.10);
+  --radius:   10px;
+  --sh:       0 1px 3px rgba(11,29,58,.06), 0 4px 16px rgba(11,29,58,.07);
+}
 
-  /* ===== Sidebar ===== */
-  .sidebar{
-    background:var(--sidebar);color:#DCEFEC;
-    padding:24px 20px;display:flex;flex-direction:column;gap:22px;
-    position:sticky;top:0;height:100vh;overflow-y:auto;
-  }
-  .sb-brand{display:flex;align-items:center;gap:12px;}
-  .brand-mark{
-    width:40px;height:40px;border-radius:11px;flex-shrink:0;
-    background:linear-gradient(135deg,var(--teal),#147A6D);
-    display:flex;align-items:center;justify-content:center;
-    font-weight:800;font-size:1.2rem;color:#0F2C29;
-  }
-  .brand-name{font-weight:800;font-size:1.1rem;line-height:1.1;color:#fff;}
-  .brand-sub{font-size:.74rem;color:#8FB8B1;}
+/* ===================================================================
+   RESET + BASE
+=================================================================== */
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--bg);color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  font-size:14px;
+}
 
-  .sb-status{display:flex;align-items:center;gap:8px;font-size:.82rem;color:#BFE3DC;}
-  .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(31,174,155,.6);animation:pulse 2.2s infinite;}
-  .dot.off{background:#E07A5F;animation:none;}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,174,155,.55);}70%{box-shadow:0 0 0 6px rgba(31,174,155,0);}100%{box-shadow:0 0 0 0 rgba(31,174,155,0);}}
-  .refresh-btn{
-    margin-left:auto;width:30px;height:30px;border-radius:50%;
-    border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);
-    color:#DCEFEC;display:flex;align-items:center;justify-content:center;cursor:pointer;
-  }
-  .refresh-btn:hover{background:rgba(255,255,255,.12);}
-  .refresh-btn.spin svg{animation:spin .7s linear;}
-  @keyframes spin{to{transform:rotate(360deg);}}
-  .sb-updated{font-size:.72rem;color:#8FB8B1;margin-top:-14px;}
+/* ===================================================================
+   LAYOUT
+=================================================================== */
+.app{display:flex;min-height:100vh;}
 
-  .sb-label{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#8FB8B1;margin-bottom:8px;font-weight:700;}
-  .sb-options{display:flex;flex-direction:column;gap:6px;}
-  .sb-options button{
-    display:flex;align-items:center;gap:8px;text-align:left;
-    border:none;background:transparent;color:#CFE9E4;
-    padding:9px 10px;border-radius:8px;font-family:inherit;font-size:.85rem;font-weight:600;
-    cursor:pointer;transition:background .15s ease,color .15s ease;width:100%;
-  }
-  .sb-options button:hover{background:rgba(255,255,255,.06);}
-  .sb-options button.active{background:var(--teal);color:#0F2C29;}
-  .sb-options button svg{flex-shrink:0;}
+/* ===================================================================
+   SIDEBAR
+=================================================================== */
+.sidebar{
+  width:220px;flex-shrink:0;
+  background:var(--sidebar);
+  display:flex;flex-direction:column;gap:0;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+}
 
-  .sb-custom{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
-  .sb-custom label{display:flex;flex-direction:column;gap:4px;font-size:.75rem;color:#9FC9C2;}
-  .sb-custom input{
-    background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);
-    color:#EAF6F4;border-radius:6px;padding:6px 8px;font-family:inherit;font-size:.8rem;
-  }
+.sb-top{padding:20px 16px 0;}
 
-  .sb-clock{border-top:1px solid rgba(255,255,255,.1);padding-top:18px;}
-  .timeline{display:flex;width:100%;height:10px;border-radius:5px;overflow:hidden;}
-  .seg.lucia{background:var(--teal);}
-  .seg.team{background:var(--amber);}
-  .timeline-ticks{position:relative;height:16px;font-size:.64rem;color:#8FB8B1;margin-top:4px;}
-  .timeline-ticks span{position:absolute;transform:translateX(-50%);}
-  .timeline-ticks span:first-child{transform:translateX(0);}
-  .timeline-ticks span:last-child{transform:translateX(-100%);}
-  .clock-foot{font-size:.7rem;color:#8FB8B1;line-height:1.5;margin:10px 0 0;}
+.sb-brand{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.brand-mark{
+  width:36px;height:36px;border-radius:9px;flex-shrink:0;
+  background:var(--blue);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:1rem;color:#fff;letter-spacing:-.5px;
+}
+.brand-name{color:#fff;font-weight:700;font-size:.95rem;line-height:1.2;}
+.brand-sub{color:var(--s-text);font-size:.7rem;}
 
-  .sb-footer{margin-top:auto;font-size:.75rem;padding-top:10px;}
-  .sb-footer a{color:#9FC9C2;text-decoration:none;}
-  .sb-footer a:hover{text-decoration:underline;}
+.sb-status{
+  display:flex;align-items:center;gap:8px;
+  font-size:.75rem;color:var(--s-text2);
+  padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.06);
+}
+.dot{width:7px;height:7px;border-radius:50%;background:#22D3A4;
+     box-shadow:0 0 0 0 rgba(34,211,164,.5);animation:pulse 2s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,211,164,.5);}70%{box-shadow:0 0 0 6px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
+#sbLastUpdate{display:block;margin-top:2px;font-size:.7rem;color:var(--s-text);}
 
-  /* ===== Main ===== */
-  .main{padding:28px 32px 60px;}
-  .error-banner{
-    background:var(--amber-soft);border:1px solid var(--amber);color:#8A4A12;
-    border-radius:var(--radius);padding:12px 16px;font-size:.85rem;margin-bottom:18px;display:none;
-  }
-  .page-header{margin-bottom:20px;}
-  .page-header h1{font-size:1.5rem;font-weight:800;margin:0 0 4px;}
-  .muted{color:var(--muted);font-size:.88rem;margin:0;}
+.sb-section{padding:16px 12px 6px;}
+.sb-label{
+  font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--s-text);padding:0 4px 8px;
+}
+.sb-btn{
+  display:block;width:100%;text-align:left;
+  background:transparent;border:none;cursor:pointer;
+  color:var(--s-text2);font-family:inherit;font-size:.82rem;font-weight:500;
+  padding:8px 10px;border-radius:7px;
+  transition:background .15s, color .15s;
+  margin-bottom:2px;
+}
+.sb-btn:hover{background:var(--s-hover);color:#fff;}
+.sb-btn.active{background:var(--s-active);color:#fff;font-weight:600;}
 
-  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:22px;}
-  .kpi-card{
-    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-    box-shadow:var(--shadow);padding:18px 20px;border-left:4px solid var(--teal);
-    transition:border-color .2s ease;
-  }
-  .kpis.vista-equipo .kpi-card{border-left-color:var(--amber);}
-  .kpi-icon{
-    width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;
-    background:var(--teal-soft);color:var(--teal);margin-bottom:10px;
-  }
-  .kpis.vista-equipo .kpi-icon{background:var(--amber-soft);color:#B5662A;}
-  .kpi-value{font-size:1.8rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1;}
-  .kpi-label{font-size:.82rem;font-weight:700;margin-top:6px;}
-  .kpi-sub{font-size:.76rem;color:var(--muted);margin-top:2px;}
+.sb-custom{padding:0 12px 8px;display:none;}
+.sb-custom.open{display:block;}
+.sb-input{
+  width:100%;background:#0F2A4A;border:1px solid rgba(255,255,255,.1);
+  color:#fff;font-family:inherit;font-size:.78rem;padding:7px 9px;border-radius:6px;
+  margin-bottom:6px;
+}
+.sb-input::-webkit-calendar-picker-indicator{filter:invert(1) opacity(.5);}
 
-  .panel{
-    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-    box-shadow:var(--shadow);padding:20px 22px;margin-bottom:20px;
-  }
-  .panel-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
-  .panel h2{font-size:1.02rem;font-weight:800;margin:0;}
-  .legend{display:flex;gap:14px;font-size:.78rem;color:var(--muted);flex-wrap:wrap;}
-  .legend-item{display:flex;align-items:center;gap:6px;}
-  .swatch{width:10px;height:10px;border-radius:3px;display:inline-block;}
-  .swatch.teal,.swatch.lucia{background:var(--teal);}
-  .swatch.amber,.swatch.team{background:var(--amber);}
+.sb-refresh{
+  margin:12px;border-radius:8px;
+  background:transparent;border:1px solid rgba(255,255,255,.12);
+  color:var(--s-text2);font-family:inherit;font-size:.78rem;font-weight:500;
+  padding:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;
+  transition:background .15s, color .15s;
+}
+.sb-refresh:hover{background:var(--s-hover);color:#fff;}
+.sb-refresh svg{flex-shrink:0;}
+.sb-refresh.spin svg{animation:spin .6s linear;}
+@keyframes spin{to{transform:rotate(360deg);}}
 
-  .chart-wrap{position:relative;}
-  .chart-wrap svg{width:100%;height:320px;display:block;}
-  .chart-tooltip{
-    position:absolute;top:8px;transform:translateX(-50%);
-    background:var(--ink);color:#fff;padding:6px 10px;border-radius:6px;
-    font-size:.74rem;line-height:1.5;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .1s;
-  }
+.sb-footer{padding:16px;margin-top:auto;font-size:.7rem;color:var(--s-text);line-height:1.6;}
+.sb-footer a{color:var(--s-text2);text-decoration:none;}
 
-  /* Comparativa */
-  .comp-legend{display:flex;gap:14px;font-size:.78rem;color:var(--muted);margin-bottom:16px;}
-  .comp-row{margin-bottom:14px;}
-  .comp-row:last-child{margin-bottom:0;}
-  .comp-label{font-size:.85rem;font-weight:700;margin-bottom:6px;}
-  .comp-bar{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
-  .comp-track{flex:1;height:9px;background:var(--bg);border-radius:5px;overflow:hidden;}
-  .comp-fill{height:100%;border-radius:5px;transition:width .4s ease;}
-  .comp-fill.lucia{background:var(--teal);}
-  .comp-fill.team{background:var(--amber);}
-  .comp-val{width:60px;text-align:right;font-size:.8rem;font-weight:700;font-variant-numeric:tabular-nums;}
+/* ===================================================================
+   MAIN
+=================================================================== */
+.main{flex:1;min-width:0;display:flex;flex-direction:column;}
 
-  /* Table */
-  .table-wrap{max-height:420px;overflow:auto;border:1px solid var(--border);border-radius:8px;}
-  table{width:100%;border-collapse:collapse;font-size:.8rem;}
-  thead{position:sticky;top:0;z-index:1;}
-  thead th{background:var(--card);border-bottom:1px solid var(--border);padding:8px 10px;text-align:right;font-weight:700;}
-  thead tr.group th{background:#F7F9F8;font-size:.66rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border-bottom:1px solid var(--border);}
-  th.cell-date,td.cell-date{text-align:left;}
-  td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums;}
-  tbody tr:hover{background:var(--bg);}
-  .empty{text-align:center;color:var(--muted);padding:24px;}
+.main-header{
+  background:var(--card);border-bottom:1px solid var(--border);
+  padding:16px 28px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+}
+.main-title{font-size:1.05rem;font-weight:700;color:var(--ink);}
+.main-range{font-size:.82rem;color:var(--ink2);font-weight:500;}
 
-  @media (max-width:900px){
-    .app{grid-template-columns:1fr;}
-    .sidebar{position:static;height:auto;}
-    .main{padding:18px;}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .dot{animation:none;}
-    .refresh-btn.spin svg{animation:none;}
-    .comp-fill{transition:none;}
-  }
+.content{padding:24px 28px;display:flex;flex-direction:column;gap:22px;}
+
+/* ===================================================================
+   ERROR BANNER
+=================================================================== */
+.error-banner{
+  background:#FEF2F2;border:1px solid #FCA5A5;color:#991B1B;
+  border-radius:var(--radius);padding:12px 16px;font-size:.82rem;display:none;
+}
+
+/* ===================================================================
+   LEGEND
+=================================================================== */
+.legend{display:flex;align-items:center;gap:18px;margin-bottom:2px;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;color:var(--ink2);}
+.legend-dot{width:9px;height:9px;border-radius:50%;}
+.legend-dot.blue{background:var(--blue);}
+.legend-dot.cyan{background:var(--cyan);}
+
+/* ===================================================================
+   KPI ROW
+=================================================================== */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;}
+.kpi-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:var(--sh);padding:16px 18px;
+}
+.kpi-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:.67rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 8px;border-radius:20px;margin-bottom:10px;
+}
+.kpi-badge.blue{background:var(--blue-soft);color:var(--blue);}
+.kpi-badge.cyan{background:var(--cyan-soft);color:#0280B5;}
+.kpi-val{font-size:1.7rem;font-weight:800;line-height:1;letter-spacing:-.03em;color:var(--ink);}
+.kpi-label{font-size:.78rem;color:var(--ink2);margin-top:5px;font-weight:500;}
+
+/* ===================================================================
+   CHART CARD
+=================================================================== */
+.chart-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:var(--sh);padding:20px 22px;
+}
+.chart-hd{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.chart-title{font-size:.88rem;font-weight:700;color:var(--ink);}
+.chart-area{position:relative;height:220px;width:100%;overflow:hidden;}
+svg.chart{display:block;width:100%;height:100%;}
+
+/* ===================================================================
+   MONTHLY TABLE (replica of Excel summary)
+=================================================================== */
+.table-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:var(--sh);overflow:hidden;
+}
+.table-hd{
+  padding:16px 20px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+.table-hd .chart-title{font-size:.88rem;font-weight:700;}
+.tbl-wrap{overflow-x:auto;}
+table{
+  width:100%;border-collapse:collapse;font-size:.78rem;
+  min-width:700px;
+}
+thead tr:first-child th{
+  background:#F8FAFD;text-align:center;
+  border-bottom:2px solid var(--border);
+  font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:10px 8px;color:var(--ink2);
+}
+thead tr:first-child th:first-child{text-align:left;padding-left:16px;}
+thead tr.sub-hd th{
+  background:#F0F5FB;font-size:.72rem;font-weight:600;color:var(--ink2);
+  padding:7px 8px;text-align:right;border-bottom:1px solid var(--border);
+}
+thead tr.sub-hd th:first-child{text-align:left;padding-left:16px;}
+/* group header spans */
+th.g-blue{background:#EEF3FC;color:var(--blue)!important;border-bottom:2px solid var(--blue)!important;}
+th.g-cyan{background:#E7F6FF;color:#0280B5!important;border-bottom:2px solid var(--cyan)!important;}
+th.g-gray{background:#F8FAFD;color:var(--ink2)!important;}
+
+tbody tr{border-bottom:1px solid var(--border);}
+tbody tr:last-child{border-bottom:none;}
+tbody tr.total-row{background:#F0F5FB;font-weight:700;}
+tbody td{padding:9px 8px;text-align:right;color:var(--ink);}
+tbody td:first-child{text-align:left;padding-left:16px;font-weight:600;}
+tbody tr:hover:not(.total-row){background:#F8FAFD;}
+tbody tr.total-row td{border-top:2px solid var(--border);}
+.cell-blue{color:var(--blue);font-weight:600;}
+.cell-cyan{color:#0280B5;font-weight:600;}
+.td-month{font-size:.76rem;color:var(--ink);}
+td.zero{color:#C8D6E8;}
+
+/* ===================================================================
+   RESPONSIVE
+=================================================================== */
+@media(max-width:860px){
+  .sidebar{display:none;}
+  .content{padding:16px;}
+  .kpi-row{grid-template-columns:repeat(2,1fr);}
+}
 </style>
 </head>
 <body>
 <div class="app">
 
-  <!-- ================= SIDEBAR ================= -->
-  <aside class="sidebar">
+<!-- ============================================================
+     SIDEBAR
+============================================================ -->
+<aside class="sidebar">
+  <div class="sb-top">
     <div class="sb-brand">
       <div class="brand-mark">L</div>
       <div>
@@ -187,568 +251,494 @@
         <div class="brand-sub">Dental Pro Cobertura</div>
       </div>
     </div>
+  </div>
 
+  <div class="sb-status">
+    <span class="dot"></span>
     <div>
-      <div class="sb-status">
-        <span class="dot" id="liveDot"></span>
-        <span id="liveLabel">En vivo</span>
-        <button class="refresh-btn" id="refreshBtn" title="Actualizar ahora" aria-label="Actualizar">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/>
-            <path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/>
-          </svg>
-        </button>
-      </div>
-      <div class="sb-updated" id="lastUpdate">cargando…</div>
+      <span>En vivo</span>
+      <span id="sbLastUpdate">cargando…</span>
     </div>
+  </div>
 
-    <div class="sb-group">
-      <div class="sb-label">Período</div>
-      <div class="sb-options" id="periodOptions">
-        <button data-period="today">Hoy</button>
-        <button data-period="7d">Últimos 7 días</button>
-        <button data-period="30d" class="active">Últimos 30 días</button>
-        <button data-period="month">Este mes</button>
-        <button data-period="year">Año 2026</button>
-        <button data-period="custom">Personalizado</button>
-      </div>
-      <div class="sb-custom" id="customRange" hidden>
-        <label>Desde <input type="date" id="dateFrom"></label>
-        <label>Hasta <input type="date" id="dateTo"></label>
-      </div>
-    </div>
+  <div class="sb-section">
+    <div class="sb-label">Período</div>
+    <button class="sb-btn" data-range="today">Hoy</button>
+    <button class="sb-btn" data-range="7">Últimos 7 días</button>
+    <button class="sb-btn active" data-range="30">Últimos 30 días</button>
+    <button class="sb-btn" data-range="month">Este mes</button>
+    <button class="sb-btn" data-range="year">Año 2026</button>
+    <button class="sb-btn" id="btnCustom" data-range="custom">Personalizado</button>
+  </div>
 
-    <div class="sb-group">
-      <div class="sb-label">Vista</div>
-      <div class="sb-options" id="vistaOptions">
-        <button data-vista="lucia" class="active">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          Lucía · fuera de horario
-        </button>
-        <button data-vista="equipo">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-          Equipo · horario laboral
-        </button>
-      </div>
-    </div>
+  <div class="sb-custom" id="customPanel">
+    <input type="date" class="sb-input" id="dateFrom" placeholder="Desde"/>
+    <input type="date" class="sb-input" id="dateTo" placeholder="Hasta"/>
+    <button class="sb-btn active" onclick="applyCustomRange()" style="margin-top:2px;">Aplicar</button>
+  </div>
 
-    <div class="sb-clock">
-      <div class="sb-label">Cobertura · Lun-Jue</div>
-      <div class="timeline">
-        <div class="seg lucia" style="flex:36.11"></div>
-        <div class="seg team" style="flex:43.06"></div>
-        <div class="seg lucia" style="flex:20.83"></div>
-      </div>
-      <div class="timeline-ticks">
-        <span style="left:0%">00:00</span>
-        <span style="left:36.11%">08:40</span>
-        <span style="left:79.17%">19:00</span>
-        <span style="left:100%">24:00</span>
-      </div>
-      <p class="clock-foot">Viernes desde las 16:00, y todo el fin de semana, Lucía cubre el 100% del día.</p>
-    </div>
+  <button class="sb-refresh" id="refreshBtn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/>
+      <path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/>
+    </svg>
+    Actualizar ahora
+  </button>
 
-    <div class="sb-footer">
-      <a href="https://www.dentalprocobertura.com.uy" target="_blank" rel="noopener">dentalprocobertura.com.uy</a>
-    </div>
-  </aside>
+  <div class="sb-footer">
+    <a href="https://www.dentalprocobertura.com.uy" target="_blank">dentalprocobertura.com.uy</a>
+  </div>
+</aside>
 
-  <!-- ================= MAIN ================= -->
-  <main class="main">
+<!-- ============================================================
+     MAIN
+============================================================ -->
+<main class="main">
+  <div class="main-header">
+    <span class="main-title">Dashboard de conversaciones</span>
+    <span class="main-range" id="rangeLabel">Últimos 30 días</span>
+  </div>
+
+  <div class="content">
+
     <div class="error-banner" id="errorBanner">
-      No se pudieron cargar los datos de la planilla en este momento. Reintentando automáticamente…
+      ⚠ No se pudieron cargar los datos. Verificá la conexión o reintentá.
     </div>
 
-    <header class="page-header">
-      <h1 id="pageTitle">—</h1>
-      <p class="muted" id="pageSubtitle">—</p>
-    </header>
+    <!-- KPIs — siempre ambas secciones -->
+    <div>
+      <div class="legend" style="margin-bottom:12px;">
+        <span class="legend-item"><span class="legend-dot blue"></span>Equipo · dentro de horario</span>
+        <span class="legend-item"><span class="legend-dot cyan"></span>Lucía · fuera de horario</span>
+      </div>
+      <div class="kpi-row" id="kpiRow"></div>
+    </div>
 
-    <section class="kpis vista-lucia" id="kpiGrid">
-      <div class="kpi-card">
-        <div class="kpi-icon" data-icon="0"></div>
-        <div class="kpi-value" data-value="0">—</div>
-        <div class="kpi-label" data-label="0"></div>
-        <div class="kpi-sub" data-sub="0"></div>
+    <!-- Chart conversaciones por día -->
+    <div class="chart-card">
+      <div class="chart-hd">
+        <span class="chart-title">Conversaciones por día</span>
+        <div class="legend">
+          <span class="legend-item"><span class="legend-dot blue"></span>Dentro</span>
+          <span class="legend-item"><span class="legend-dot cyan"></span>Fuera</span>
+        </div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-icon" data-icon="1"></div>
-        <div class="kpi-value" data-value="1">—</div>
-        <div class="kpi-label" data-label="1"></div>
-        <div class="kpi-sub" data-sub="1"></div>
+      <div class="chart-area" id="convChartArea">
+        <svg class="chart" id="convChart" viewBox="0 0 900 220" preserveAspectRatio="none"></svg>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-icon" data-icon="2"></div>
-        <div class="kpi-value" data-value="2">—</div>
-        <div class="kpi-label" data-label="2"></div>
-        <div class="kpi-sub" data-sub="2"></div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-icon" data-icon="3"></div>
-        <div class="kpi-value" data-value="3">—</div>
-        <div class="kpi-label" data-label="3"></div>
-        <div class="kpi-sub" data-sub="3"></div>
-      </div>
-    </section>
+    </div>
 
-    <section class="panel">
-      <div class="panel-header">
-        <h2 id="chartTitle">Mensajes por día</h2>
-        <div class="legend" id="chartLegend"></div>
+    <!-- Chart mensajes por día -->
+    <div class="chart-card">
+      <div class="chart-hd">
+        <span class="chart-title">Mensajes recibidos por día</span>
+        <div class="legend">
+          <span class="legend-item"><span class="legend-dot blue"></span>Dentro horario</span>
+          <span class="legend-item"><span class="legend-dot cyan"></span>Fuera horario (Lucía)</span>
+        </div>
       </div>
-      <div class="chart-wrap">
-        <svg id="mainChart" viewBox="0 0 960 320" preserveAspectRatio="none"></svg>
-        <div class="chart-tooltip" id="chartTooltip"></div>
+      <div class="chart-area" id="msgChartArea">
+        <svg class="chart" id="msgChart" viewBox="0 0 900 220" preserveAspectRatio="none"></svg>
       </div>
-    </section>
+    </div>
 
-    <section class="panel">
-      <div class="panel-header"><h2>Lucía vs. Equipo — período seleccionado</h2></div>
-      <div id="comparativa"></div>
-    </section>
-
-    <section class="panel">
-      <div class="panel-header"><h2>Detalle diario</h2></div>
-      <div class="table-wrap">
-        <table>
+    <!-- Resumen mensual — replica del Excel -->
+    <div class="table-card">
+      <div class="table-hd">
+        <span class="chart-title">Resumen mensual 2026</span>
+        <div class="legend">
+          <span class="legend-item"><span class="legend-dot blue"></span>Dentro horario</span>
+          <span class="legend-item"><span class="legend-dot cyan"></span>Fuera horario (Lucía)</span>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table id="monthTable">
           <thead>
-            <tr class="group">
-              <th rowspan="2" class="cell-date">Fecha</th>
-              <th colspan="3">Equipo · horario laboral</th>
-              <th colspan="3">Lucía · fuera de horario</th>
-              <th colspan="2">Ahorro</th>
-            </tr>
             <tr>
-              <th>Recib.</th><th>Env.</th><th>Conv.</th>
-              <th>Recib.</th><th>Env.</th><th>Conv.</th>
-              <th>Horas</th><th>USD</th>
+              <th rowspan="2" style="text-align:left;padding-left:16px;">Mes</th>
+              <th colspan="3" class="g-blue">Dentro de horario · Equipo</th>
+              <th colspan="3" class="g-cyan">Fuera de horario · Lucía</th>
+              <th colspan="2" class="g-gray">Ahorro estimado</th>
+            </tr>
+            <tr class="sub-hd">
+              <th>Recibidos</th><th>Enviados</th><th>Conversaciones</th>
+              <th>Recibidos</th><th>Enviados</th><th>Conversaciones</th>
+              <th>Tiempo (min)</th><th>USD</th>
             </tr>
           </thead>
-          <tbody id="tableBody"></tbody>
+          <tbody id="monthTbody"></tbody>
         </table>
       </div>
-    </section>
-  </main>
+    </div>
 
-</div>
+  </div><!-- /content -->
+</main>
+</div><!-- /app -->
 
 <script>
-/* ================= CONFIG ================= */
-const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFVPZbbqXAnuS1nBYFtBeXgs8vjkoYjPJo4Y_Z468Gx4siQtU5Eo0soH2f_cli5xGo5UrMySUzUoYu/pub?gid=303503479&single=true&output=csv";
-const AUTO_REFRESH_SECONDS = 30;
+/* ===================================================================
+   CONFIG
+=================================================================== */
+const CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFVPZbbqXAnuS1nBYFtBeXgs8vjkoYjPJo4Y_Z468Gx4siQtU5Eo0soH2f_cli5xGo5UrMySUzUoYu/pub?gid=303503479&single=true&output=csv";
+const AUTO_MS = 30_000; // 30s auto refresh
 
-const COLORS = {
-  teal:'#1FAE9B', tealSoft:'rgba(31,174,155,.16)',
-  amber:'#F2A154', amberSoft:'rgba(242,161,84,.22)',
-  ink:'#16231F', muted:'#6E7E7B', grid:'#E3E8E6'
-};
+const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+               'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
-const ICONS = {
-  chat:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>',
-  inbox:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>',
-  send:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>',
-  coin:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>',
-  activity:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
-};
-
-/* ================= CSV PARSER ================= */
-function parseCSV(text){
-  const rows = []; let row = [], field = '', inQuotes = false;
-  for (let i = 0; i < text.length; i++){
-    const c = text[i];
-    if (inQuotes){
-      if (c === '"'){ if (text[i+1] === '"'){ field += '"'; i++; } else inQuotes = false; }
-      else field += c;
-    } else {
-      if (c === '"') inQuotes = true;
-      else if (c === ','){ row.push(field); field=''; }
-      else if (c === '\r'){ }
-      else if (c === '\n'){ row.push(field); field=''; rows.push(row); row=[]; }
-      else field += c;
+/* ===================================================================
+   CSV PARSER — robust, handles quoted multi-line fields
+=================================================================== */
+function parseCSV(txt){
+  const rows=[];let row=[],f='',q=false;
+  for(let i=0;i<txt.length;i++){
+    const c=txt[i];
+    if(q){
+      if(c==='"'){if(txt[i+1]==='"'){f+='"';i++;}else q=false;}
+      else f+=c;
+    }else{
+      if(c==='"')q=true;
+      else if(c===','){row.push(f);f='';}
+      else if(c==='\r'){}
+      else if(c==='\n'){row.push(f);f='';rows.push(row);row=[];}
+      else f+=c;
     }
   }
-  if (field.length > 0 || row.length > 0){ row.push(field); rows.push(row); }
+  if(f||row.length){row.push(f);rows.push(row);}
   return rows;
 }
-function parseNum(s){
-  if (!s) return 0;
-  const n = parseFloat(String(s).replace(/[$\s]/g,'').replace(',', '.'));
-  return isNaN(n) ? 0 : n;
+function pn(s){
+  const n=parseFloat(String(s||'').replace(/[$\s]/g,'').replace(',','.'));
+  return isNaN(n)?0:n;
 }
 
-/* ================= HELPERS ================= */
+/* ===================================================================
+   DATE HELPERS
+=================================================================== */
 function todayStr(){
-  const d = new Date();
-  const tz = new Date(d.getTime() - d.getTimezoneOffset()*60000);
-  return tz.toISOString().slice(0,10);
+  const d=new Date();
+  const off=d.getTimezoneOffset()*60000;
+  return new Date(d-off).toISOString().slice(0,10);
 }
-function addDays(dateStr, n){
-  const d = new Date(dateStr+'T00:00:00');
-  d.setDate(d.getDate()+n);
+function addDays(iso,n){
+  const d=new Date(iso+'T00:00:00');d.setDate(d.getDate()+n);
   return d.toISOString().slice(0,10);
 }
-function fmtInt(n){ return Math.round(n).toLocaleString('es-UY'); }
-function fmtUSD(n){ return '$' + Math.round(n).toLocaleString('es-UY'); }
-function fmtHours(min){ return (min/60).toLocaleString('es-UY',{minimumFractionDigits:1, maximumFractionDigits:1}); }
-function fmtDateShort(iso){ const p = iso.split('-'); return `${p[2]}/${p[1]}`; }
-function fmtDateLong(iso){ const p = iso.split('-'); return `${p[2]}/${p[1]}/${p[0]}`; }
-function mondayOf(dateStr){
-  const d = new Date(dateStr+'T00:00:00');
-  const day = d.getDay();
-  const diff = (day === 0 ? -6 : 1 - day);
-  d.setDate(d.getDate()+diff);
-  return d.toISOString().slice(0,10);
+
+/* ===================================================================
+   STATE
+=================================================================== */
+let ALL=[]; // daily rows, sorted
+let FROM='',TO='';
+let currentRange='30';
+
+function getRange(range){
+  const today=todayStr();
+  if(range==='today') return {f:today,t:today,label:'Hoy · '+fmtDate(today)};
+  if(range==='7')  return {f:addDays(today,-6),t:today,label:'Últimos 7 días'};
+  if(range==='30') return {f:addDays(today,-29),t:today,label:'Últimos 30 días'};
+  if(range==='month'){
+    const ym=today.slice(0,7);
+    return {f:ym+'-01',t:today,label:'Este mes · '+MESES[+today.slice(5,7)-1]};
+  }
+  if(range==='year') return {f:'2026-01-01',t:today,label:'Año 2026'};
+  if(range==='custom'){
+    const f=document.getElementById('dateFrom').value||'2026-01-01';
+    const t=document.getElementById('dateTo').value||today;
+    return {f,t,label:`${fmtDate(f)} – ${fmtDate(t)}`};
+  }
+  return {f:addDays(today,-29),t:today,label:'Últimos 30 días'};
 }
-function niceMax(v){
-  if (v <= 0) return 4;
-  const pow = Math.pow(10, Math.floor(Math.log10(v)));
-  const n = v/pow;
-  let m;
-  if (n<=1) m=1; else if (n<=2) m=2; else if (n<=2.5) m=2.5; else if (n<=5) m=5; else m=10;
-  return m*pow;
+
+function filtered(){
+  if(!FROM&&!TO) return [];
+  return ALL.filter(d=>d.date>=FROM&&d.date<=TO);
 }
 
-const PERIOD_LABELS = {
-  today:'Hoy', '7d':'Últimos 7 días', '30d':'Últimos 30 días',
-  month:'Este mes', year:'Año 2026', custom:'Período personalizado'
-};
+function sumOf(rows){
+  return rows.reduce((a,d)=>({
+    rd:a.rd+d.rd, ed:a.ed+d.ed, cd:a.cd+d.cd,
+    rf:a.rf+d.rf, ef:a.ef+d.ef, cf:a.cf+d.cf,
+    min:a.min+d.min, usd:a.usd+d.usd
+  }),{rd:0,ed:0,cd:0,rf:0,ef:0,cf:0,min:0,usd:0});
+}
 
-/* ================= STATE ================= */
-const state = { daily: [], period: '30d', vista: 'lucia', customFrom: null, customTo: null };
+/* ===================================================================
+   FORMAT
+=================================================================== */
+function fmtN(n){return Math.round(n).toLocaleString('es-UY');}
+function fmtUSD(n){return '$'+n.toLocaleString('es-UY',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fmtDate(iso){
+  if(!iso) return '';
+  const [y,m,d]=iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+function fmtShort(iso){
+  const [,m,d]=iso.split('-');return `${d}/${m}`;
+}
 
-/* ================= DATA LOADING ================= */
-async function fetchDaily(){
-  const url = CSV_URL + '&_ts=' + Date.now();
-  const res = await fetch(url, {cache: 'no-store'});
-  if (!res.ok) throw new Error('HTTP ' + res.status);
-  const text = await res.text();
-  const rows = parseCSV(text);
-  const daily = [];
-  for (let i = 1; i < rows.length; i++){
-    const r = rows[i];
-    if (!r[0] || !/^\d{4}-\d{2}-\d{2}/.test(r[0])) continue;
+/* ===================================================================
+   RENDER: KPIs
+=================================================================== */
+function renderKPIs(rows){
+  const s=sumOf(rows);
+  const today=todayStr();
+  const todayRow=ALL.find(d=>d.date===today)||{rd:0,ed:0,cd:0,rf:0,ef:0,cf:0,min:0,usd:0};
+
+  const cards=[
+    {badge:'blue',label:'Equipo',kpis:[
+      {v:fmtN(s.cd),label:'Conversaciones dentro'},
+      {v:fmtN(s.rd),label:'Mensajes recibidos dentro'},
+      {v:fmtN(s.ed),label:'Mensajes enviados dentro'},
+    ]},
+    {badge:'cyan',label:'Lucía',kpis:[
+      {v:fmtN(s.cf),label:'Conversaciones fuera'},
+      {v:fmtN(s.rf),label:'Mensajes recibidos fuera'},
+      {v:fmtN(s.ef),label:'Mensajes enviados por Lucía'},
+    ]},
+    {badge:'cyan',label:'Lucía · Ahorro',kpis:[
+      {v:(s.min/60).toLocaleString('es-UY',{minimumFractionDigits:1,maximumFractionDigits:1})+' h',label:'Tiempo devuelto al equipo'},
+      {v:fmtUSD(s.usd),label:'Ahorro estimado (USD)'},
+    ]},
+  ];
+
+  const kpiRow=document.getElementById('kpiRow');
+  kpiRow.innerHTML='';
+  for(const group of cards){
+    for(const k of group.kpis){
+      kpiRow.innerHTML+=`
+        <div class="kpi-card">
+          <div class="kpi-badge ${group.badge}">${group.label}</div>
+          <div class="kpi-val">${k.v}</div>
+          <div class="kpi-label">${k.label}</div>
+        </div>`;
+    }
+  }
+}
+
+/* ===================================================================
+   RENDER: SVG LINE/BAR CHART
+=================================================================== */
+function drawChart(svgId, rows, getA, getB, colorA, colorB){
+  const svg=document.getElementById(svgId);
+  if(!svg) return;
+  const W=900, H=220, PL=44, PR=10, PT=14, PB=32;
+  const cW=W-PL-PR, cH=H-PT-PB;
+
+  const valsA=rows.map(getA), valsB=rows.map(getB);
+  const maxV=Math.max(...valsA,...valsB,1);
+
+  // Gridlines & Y axis
+  const steps=4;
+  let ticks='';
+  for(let i=0;i<=steps;i++){
+    const v=Math.round(maxV*i/steps);
+    const y=PT+cH-cH*i/steps;
+    ticks+=`<line x1="${PL}" y1="${y}" x2="${W-PR}" y2="${y}" stroke="#E8EFF7" stroke-width="1"/>`;
+    ticks+=`<text x="${PL-6}" y="${y+4}" text-anchor="end" font-size="10" fill="#9BAEC8">${v}</text>`;
+  }
+
+  const n=rows.length;
+  if(n===0){svg.innerHTML='<text x="450" y="110" text-anchor="middle" font-size="13" fill="#9BAEC8">Sin datos para el período seleccionado</text>';return;}
+
+  function xOf(i){return PL+cW*i/Math.max(n-1,1);}
+  function yOf(v){return PT+cH-cH*Math.min(v,maxV)/maxV;}
+
+  // X labels — max 10 visible
+  let xlabels='';
+  const step=Math.ceil(n/10);
+  for(let i=0;i<n;i+=step){
+    const x=xOf(i);
+    xlabels+=`<text x="${x}" y="${H-4}" text-anchor="middle" font-size="10" fill="#9BAEC8">${fmtShort(rows[i].date)}</text>`;
+  }
+
+  // Bars for A (behind)
+  const bw=Math.max(2,Math.min(18,cW/n-2));
+  let bars='';
+  for(let i=0;i<n;i++){
+    const x=xOf(i);
+    const yv=yOf(valsA[i]);
+    bars+=`<rect x="${x-bw/2}" y="${yv}" width="${bw}" height="${PT+cH-yv}" fill="${colorA}" opacity="0.25" rx="2"/>`;
+  }
+
+  // Line for B
+  let pts=rows.map((r,i)=>`${xOf(i)},${yOf(valsB[i])}`).join(' ');
+  // area fill
+  let areaPts=`${xOf(0)},${PT+cH} ${pts} ${xOf(n-1)},${PT+cH}`;
+
+  const uid='g'+Math.random().toString(36).slice(2,7);
+  svg.innerHTML=`
+    <defs>
+      <linearGradient id="${uid}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${colorB}" stop-opacity=".18"/>
+        <stop offset="100%" stop-color="${colorB}" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    ${ticks}${xlabels}${bars}
+    <polygon points="${areaPts}" fill="url(#${uid})"/>
+    <polyline points="${pts}" fill="none" stroke="${colorB}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    ${rows.map((r,i)=>`<circle cx="${xOf(i)}" cy="${yOf(valsB[i])}" r="3" fill="${colorB}" stroke="#fff" stroke-width="1.5"/>`).join('')}
+  `;
+}
+
+/* ===================================================================
+   RENDER: MONTHLY TABLE
+=================================================================== */
+function renderTable(){
+  const today=todayStr();
+  const upTo=ALL.filter(d=>d.date<=today);
+
+  // group by month
+  const byM={};
+  upTo.forEach(d=>{
+    const k=d.date.slice(0,7);
+    if(!byM[k]) byM[k]={rd:0,ed:0,cd:0,rf:0,ef:0,cf:0,min:0,usd:0};
+    const m=byM[k];
+    m.rd+=d.rd;m.ed+=d.ed;m.cd+=d.cd;
+    m.rf+=d.rf;m.ef+=d.ef;m.cf+=d.cf;
+    m.min+=d.min;m.usd+=d.usd;
+  });
+
+  const totals={rd:0,ed:0,cd:0,rf:0,ef:0,cf:0,min:0,usd:0};
+  const months=['2026-01','2026-02','2026-03','2026-04','2026-05','2026-06',
+                '2026-07','2026-08','2026-09','2026-10','2026-11','2026-12'];
+
+  let html='';
+  months.forEach(ym=>{
+    const m=byM[ym]||{rd:0,ed:0,cd:0,rf:0,ef:0,cf:0,min:0,usd:0};
+    const hasData=m.rd+m.ed+m.rf+m.ef>0;
+    const monthName=MESES[+ym.slice(5,7)-1];
+    const isCurrentOrPast=ym<=today.slice(0,7);
+    const cls=(!isCurrentOrPast||!hasData)?'zero':'';
+
+    Object.keys(totals).forEach(k=>totals[k]+=m[k]);
+
+    const c=(v,style)=>`<td class="${v===0?'zero':''} ${style||''}">${v===0?'—':fmtN(v)}</td>`;
+    html+=`<tr>
+      <td class="td-month">${monthName} 2026</td>
+      ${c(m.rd,'cell-blue')}${c(m.ed,'cell-blue')}${c(m.cd,'cell-blue')}
+      ${c(m.rf,'cell-cyan')}${c(m.ef,'cell-cyan')}${c(m.cf,'cell-cyan')}
+      ${c(m.min)}
+      <td class="${m.usd===0?'zero':''}">${m.usd===0?'—':fmtUSD(m.usd)}</td>
+    </tr>`;
+  });
+
+  // totals row
+  html+=`<tr class="total-row">
+    <td>Total 2026</td>
+    <td class="cell-blue">${fmtN(totals.rd)}</td>
+    <td class="cell-blue">${fmtN(totals.ed)}</td>
+    <td class="cell-blue">${fmtN(totals.cd)}</td>
+    <td class="cell-cyan">${fmtN(totals.rf)}</td>
+    <td class="cell-cyan">${fmtN(totals.ef)}</td>
+    <td class="cell-cyan">${fmtN(totals.cf)}</td>
+    <td>${fmtN(totals.min)}</td>
+    <td>${fmtUSD(totals.usd)}</td>
+  </tr>`;
+
+  document.getElementById('monthTbody').innerHTML=html;
+}
+
+/* ===================================================================
+   MAIN RENDER
+=================================================================== */
+function renderAll(){
+  const rows=filtered();
+  renderKPIs(rows);
+  drawChart('convChart', rows, d=>d.cd, d=>d.cf, '#1A5FC8', '#0EA5E9');
+  drawChart('msgChart',  rows, d=>d.rd, d=>d.rf, '#1A5FC8', '#0EA5E9');
+  renderTable();
+}
+
+/* ===================================================================
+   FETCH + PARSE
+=================================================================== */
+async function fetchData(){
+  const res=await fetch(CSV+'&_ts='+Date.now(),{cache:'no-store'});
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  const txt=await res.text();
+  const rows=parseCSV(txt);
+  const daily=[];
+  for(let i=1;i<rows.length;i++){
+    const r=rows[i];
+    if(!r[0]||!/^\d{4}-\d{2}-\d{2}/.test(r[0])) continue;
     daily.push({
-      date: r[0],
-      recibidosDentro: +r[1] || 0,
-      enviadosDentro:  +r[2] || 0,
-      convDentro:      +r[3] || 0,
-      recibidosFuera:  +r[4] || 0,
-      enviadosFuera:   +r[5] || 0,
-      convFuera:       +r[6] || 0,
-      tiempoMin:       parseNum(r[7]),
-      dineroUSD:       parseNum(r[8]),
+      date:r[0],
+      rd:+r[1]||0, ed:+r[2]||0, cd:+r[3]||0,
+      rf:+r[4]||0, ef:+r[5]||0, cf:+r[6]||0,
+      min:pn(r[7]), usd:pn(r[8])
     });
   }
-  daily.sort((a,b) => a.date.localeCompare(b.date));
+  daily.sort((a,b)=>a.date.localeCompare(b.date));
   return daily;
 }
 
-/* ================= RANGE / FILTER ================= */
-function getRange(){
-  const today = todayStr();
-  switch(state.period){
-    case 'today': return {start: today, end: today};
-    case '7d':    return {start: addDays(today,-6), end: today};
-    case '30d':   return {start: addDays(today,-29), end: today};
-    case 'month': return {start: today.slice(0,8)+'01', end: today};
-    case 'year':  return {start: today.slice(0,4)+'-01-01', end: today};
-    case 'custom':{
-      const start = state.customFrom || addDays(today,-29);
-      const end = state.customTo || today;
-      return start <= end ? {start,end} : {start:end,end:start};
-    }
-    default: return {start: addDays(today,-29), end: today};
-  }
-}
-function filterRange(start,end){
-  return state.daily.filter(d => d.date >= start && d.date <= end && d.date <= todayStr());
-}
-function sumRows(rows){
-  return rows.reduce((a,d)=>({
-    recibidosDentro:a.recibidosDentro+d.recibidosDentro,
-    enviadosDentro:a.enviadosDentro+d.enviadosDentro,
-    convDentro:a.convDentro+d.convDentro,
-    recibidosFuera:a.recibidosFuera+d.recibidosFuera,
-    enviadosFuera:a.enviadosFuera+d.enviadosFuera,
-    convFuera:a.convFuera+d.convFuera,
-    tiempoMin:a.tiempoMin+d.tiempoMin,
-    dineroUSD:a.dineroUSD+d.dineroUSD,
-  }),{recibidosDentro:0,enviadosDentro:0,convDentro:0,recibidosFuera:0,enviadosFuera:0,convFuera:0,tiempoMin:0,dineroUSD:0});
-}
-
-/* ================= RENDER: HEADER ================= */
-function renderHeader(){
-  const {start,end} = getRange();
-  document.getElementById('pageTitle').textContent =
-    state.vista === 'lucia' ? 'Lucía · fuera de horario' : 'Equipo · horario laboral';
-  document.getElementById('pageSubtitle').textContent =
-    `${PERIOD_LABELS[state.period]} · ${fmtDateLong(start)} – ${fmtDateLong(end)}`;
-  document.getElementById('chartTitle').textContent =
-    state.vista === 'lucia' ? 'Mensajes de Lucía por día' : 'Mensajes del equipo por día';
-  document.getElementById('chartLegend').innerHTML = `
-    <span class="legend-item"><i class="swatch amber"></i>Recibidos</span>
-    <span class="legend-item"><i class="swatch teal"></i>Enviados ${state.vista==='lucia'?'(Lucía)':'(equipo)'}</span>`;
-}
-
-/* ================= RENDER: KPIs ================= */
-function setCard(i, icon, value, label, sub){
-  document.querySelector(`[data-icon="${i}"]`).innerHTML = icon;
-  document.querySelector(`[data-value="${i}"]`).textContent = value;
-  document.querySelector(`[data-label="${i}"]`).textContent = label;
-  document.querySelector(`[data-sub="${i}"]`).textContent = sub;
-}
-function renderKPIs(){
-  const {start,end} = getRange();
-  const rows = filterRange(start,end);
-  const sums = sumRows(rows);
-  const numDays = Math.max(1, rows.length);
-
-  document.getElementById('kpiGrid').className = 'kpis vista-' + state.vista;
-
-  if (state.vista === 'lucia'){
-    setCard(0, ICONS.chat, fmtInt(sums.convFuera), 'Conversaciones', 'Pacientes únicos · fuera de horario');
-    setCard(1, ICONS.inbox, fmtInt(sums.recibidosFuera), 'Mensajes recibidos', 'De pacientes · fuera de horario');
-    setCard(2, ICONS.send, fmtInt(sums.enviadosFuera), 'Mensajes enviados', 'Por Lucía · fuera de horario');
-    setCard(3, ICONS.coin, fmtHours(sums.tiempoMin) + ' h', 'Tiempo ahorrado', fmtUSD(sums.dineroUSD) + ' de ahorro estimado');
-  } else {
-    const total = sums.recibidosDentro + sums.enviadosDentro;
-    setCard(0, ICONS.chat, fmtInt(sums.convDentro), 'Conversaciones', 'Pacientes únicos · horario laboral');
-    setCard(1, ICONS.inbox, fmtInt(sums.recibidosDentro), 'Mensajes recibidos', 'De pacientes · horario laboral');
-    setCard(2, ICONS.send, fmtInt(sums.enviadosDentro), 'Mensajes enviados', 'Por el equipo · horario laboral');
-    setCard(3, ICONS.activity, fmtInt(total), 'Mensajes totales', `Promedio ${(total/numDays).toFixed(1)} por día`);
-  }
-}
-
-/* ================= RENDER: MAIN CHART ================= */
-function getChartBuckets(){
-  const {start,end} = getRange();
-  let rangeStart = start, rangeEnd = end;
-  if (state.period === 'today') rangeStart = addDays(end, -13); // extra context for a single day
-  const rows = filterRange(rangeStart, rangeEnd);
-
-  const pick = d => state.vista === 'lucia'
-    ? {recibidos: d.recibidosFuera, enviados: d.enviadosFuera}
-    : {recibidos: d.recibidosDentro, enviados: d.enviadosDentro};
-
-  if (rows.length > 60){
-    const map = new Map();
-    rows.forEach(d=>{
-      const key = mondayOf(d.date);
-      const v = pick(d);
-      if (!map.has(key)) map.set(key, {recibidos:0, enviados:0});
-      const b = map.get(key);
-      b.recibidos += v.recibidos; b.enviados += v.enviados;
-    });
-    return [...map.entries()].sort((a,b)=>a[0].localeCompare(b[0]))
-      .map(([k,v]) => ({label: fmtDateShort(k), recibidos:v.recibidos, enviados:v.enviados}));
-  }
-  return rows.map(d => Object.assign({label: fmtDateShort(d.date)}, pick(d)));
-}
-
-function renderMainChart(){
-  const buckets = getChartBuckets();
-  const n = Math.max(buckets.length, 1);
-  const W=960, H=320, padL=46, padR=16, padT=18, padB=34;
-  const plotW = W-padL-padR, plotH = H-padT-padB;
-  const maxVal = Math.max(1, ...buckets.map(b=>Math.max(b.recibidos,b.enviados)));
-  const yMax = niceMax(maxVal);
-  const x = i => n===1 ? padL+plotW/2 : padL + i*(plotW/(n-1));
-  const y = v => padT + plotH - (v/yMax)*plotH;
-  const barW = Math.max(3, Math.min(28, (plotW/n)*0.5));
-
-  let grid = '';
-  for (let g=0; g<=4; g++){
-    const val = yMax*g/4;
-    const yy = y(val);
-    grid += `<line x1="${padL}" x2="${W-padR}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="${COLORS.grid}" stroke-width="1"/>`;
-    grid += `<text x="${padL-8}" y="${(yy+4).toFixed(1)}" text-anchor="end" font-size="11" fill="${COLORS.muted}">${fmtInt(val)}</text>`;
-  }
-
-  let bars = '';
-  buckets.forEach((b,i)=>{
-    const bx = x(i)-barW/2;
-    const by = y(b.recibidos);
-    const bh = (padT+plotH) - by;
-    bars += `<rect x="${bx.toFixed(1)}" y="${by.toFixed(1)}" width="${barW.toFixed(1)}" height="${Math.max(0,bh).toFixed(1)}" rx="3" fill="${COLORS.amberSoft}" stroke="${COLORS.amber}" stroke-width="1"/>`;
-  });
-
-  const linePoints = buckets.map((b,i)=>`${x(i).toFixed(1)},${y(b.enviados).toFixed(1)}`).join(' ');
-  const lineEl = buckets.length > 1
-    ? `<polyline points="${linePoints}" fill="none" stroke="${COLORS.teal}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`
-    : '';
-  const dots = buckets.map((b,i)=>`<circle cx="${x(i).toFixed(1)}" cy="${y(b.enviados).toFixed(1)}" r="3.5" fill="${COLORS.teal}"/>`).join('');
-
-  let xlabels = '';
-  const step = Math.max(1, Math.ceil(n/8));
-  buckets.forEach((b,i)=>{
-    if (i % step === 0 || i === n-1){
-      xlabels += `<text x="${x(i).toFixed(1)}" y="${H-10}" text-anchor="middle" font-size="11" fill="${COLORS.muted}">${b.label}</text>`;
-    }
-  });
-
-  const guide = `<line id="hoverLine" x1="0" x2="0" y1="${padT}" y2="${padT+plotH}" stroke="${COLORS.ink}" stroke-width="1" stroke-dasharray="3,3" opacity="0"/>`;
-  const hoverRect = `<rect id="hoverLayer" x="${padL}" y="${padT}" width="${plotW}" height="${plotH}" fill="transparent"/>`;
-
-  const svg = document.getElementById('mainChart');
-  if (buckets.length === 0){
-    svg.innerHTML = `<text x="${W/2}" y="${H/2}" text-anchor="middle" font-size="13" fill="${COLORS.muted}">Sin datos en este período</text>`;
-    return;
-  }
-  svg.innerHTML = grid + bars + lineEl + dots + xlabels + guide + hoverRect;
-
-  const tooltip = document.getElementById('chartTooltip');
-  const hoverLayer = document.getElementById('hoverLayer');
-  const hoverLine = document.getElementById('hoverLine');
-  const step2 = n>1 ? plotW/(n-1) : plotW;
-
-  function handleMove(clientX, clientY){
-    const rect = svg.getBoundingClientRect();
-    const svgX = (clientX-rect.left) * (W/rect.width);
-    let i = Math.round((svgX-padL)/step2);
-    i = Math.max(0, Math.min(n-1, i));
-    const b = buckets[i];
-    hoverLine.setAttribute('x1', x(i).toFixed(1));
-    hoverLine.setAttribute('x2', x(i).toFixed(1));
-    hoverLine.setAttribute('opacity','1');
-    tooltip.style.opacity = '1';
-    let left = clientX-rect.left;
-    left = Math.max(40, Math.min(rect.width-40, left));
-    tooltip.style.left = left + 'px';
-    tooltip.innerHTML = `<strong>${b.label}</strong><br>Recibidos: ${fmtInt(b.recibidos)}<br>Enviados: ${fmtInt(b.enviados)}`;
-  }
-  hoverLayer.addEventListener('mousemove', e=>handleMove(e.clientX,e.clientY));
-  hoverLayer.addEventListener('mouseleave', ()=>{ hoverLine.setAttribute('opacity','0'); tooltip.style.opacity='0'; });
-  hoverLayer.addEventListener('touchstart', e=>{ if(e.touches[0]) handleMove(e.touches[0].clientX,e.touches[0].clientY); }, {passive:true});
-  hoverLayer.addEventListener('touchmove', e=>{ if(e.touches[0]) handleMove(e.touches[0].clientX,e.touches[0].clientY); e.preventDefault(); }, {passive:false});
-}
-
-/* ================= RENDER: COMPARATIVA ================= */
-function renderComparativa(){
-  const {start,end} = getRange();
-  const sums = sumRows(filterRange(start,end));
-  const metrics = [
-    {label:'Conversaciones (pacientes únicos)', fuera:sums.convFuera, dentro:sums.convDentro},
-    {label:'Mensajes recibidos', fuera:sums.recibidosFuera, dentro:sums.recibidosDentro},
-    {label:'Mensajes enviados', fuera:sums.enviadosFuera, dentro:sums.enviadosDentro},
-  ];
-  const rowsHtml = metrics.map(m=>{
-    const max = Math.max(m.fuera, m.dentro, 1);
-    return `
-      <div class="comp-row">
-        <div class="comp-label">${m.label}</div>
-        <div class="comp-bar">
-          <div class="comp-track"><div class="comp-fill lucia" style="width:${(m.fuera/max*100).toFixed(1)}%"></div></div>
-          <div class="comp-val">${fmtInt(m.fuera)}</div>
-        </div>
-        <div class="comp-bar">
-          <div class="comp-track"><div class="comp-fill team" style="width:${(m.dentro/max*100).toFixed(1)}%"></div></div>
-          <div class="comp-val">${fmtInt(m.dentro)}</div>
-        </div>
-      </div>`;
-  }).join('');
-  document.getElementById('comparativa').innerHTML = `
-    <div class="comp-legend">
-      <span class="legend-item"><i class="swatch lucia"></i>Lucía · fuera de horario</span>
-      <span class="legend-item"><i class="swatch team"></i>Equipo · horario laboral</span>
-    </div>` + rowsHtml;
-}
-
-/* ================= RENDER: TABLE ================= */
-function renderTable(){
-  const {start,end} = getRange();
-  const rows = filterRange(start,end).slice().sort((a,b)=>b.date.localeCompare(a.date));
-  const tbody = document.getElementById('tableBody');
-  if (rows.length === 0){
-    tbody.innerHTML = '<tr><td colspan="9" class="empty">Sin datos en este período.</td></tr>';
-    return;
-  }
-  tbody.innerHTML = rows.map(d=>`
-    <tr>
-      <td class="cell-date">${fmtDateLong(d.date)}</td>
-      <td>${fmtInt(d.recibidosDentro)}</td>
-      <td>${fmtInt(d.enviadosDentro)}</td>
-      <td>${fmtInt(d.convDentro)}</td>
-      <td>${fmtInt(d.recibidosFuera)}</td>
-      <td>${fmtInt(d.enviadosFuera)}</td>
-      <td>${fmtInt(d.convFuera)}</td>
-      <td>${fmtHours(d.tiempoMin)}</td>
-      <td>${fmtUSD(d.dineroUSD)}</td>
-    </tr>`).join('');
-}
-
-/* ================= MAIN UPDATE ================= */
-function updateAll(){
-  try{ renderHeader(); } catch(e){ console.error('header', e); }
-  try{ renderKPIs(); } catch(e){ console.error('kpis', e); }
-  try{ renderMainChart(); } catch(e){ console.error('chart', e); }
-  try{ renderComparativa(); } catch(e){ console.error('comparativa', e); }
-  try{ renderTable(); } catch(e){ console.error('table', e); }
-}
-
-/* ================= EVENTS ================= */
-document.getElementById('periodOptions').addEventListener('click', e=>{
-  const btn = e.target.closest('button'); if (!btn) return;
-  document.querySelectorAll('#periodOptions button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  state.period = btn.dataset.period;
-  document.getElementById('customRange').hidden = state.period !== 'custom';
-  if (state.period === 'custom' && !state.customFrom){
-    const {start,end} = {start: addDays(todayStr(),-29), end: todayStr()};
-    state.customFrom = start; state.customTo = end;
-    document.getElementById('dateFrom').value = start;
-    document.getElementById('dateTo').value = end;
-  }
-  updateAll();
-});
-document.getElementById('vistaOptions').addEventListener('click', e=>{
-  const btn = e.target.closest('button'); if (!btn) return;
-  document.querySelectorAll('#vistaOptions button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  state.vista = btn.dataset.vista;
-  updateAll();
-});
-document.getElementById('dateFrom').addEventListener('change', e=>{
-  state.customFrom = e.target.value; if (state.period==='custom') updateAll();
-});
-document.getElementById('dateTo').addEventListener('change', e=>{
-  state.customTo = e.target.value; if (state.period==='custom') updateAll();
-});
-
-/* ================= LOAD + LIVE REFRESH ================= */
-let secondsSinceUpdate = 0;
-
-async function loadAndRender(){
-  const btn = document.getElementById('refreshBtn');
+async function refresh(){
+  const btn=document.getElementById('refreshBtn');
   btn.classList.add('spin');
   try{
-    state.daily = await fetchDaily();
-    document.getElementById('errorBanner').style.display = 'none';
-    document.getElementById('liveDot').classList.remove('off');
-    document.getElementById('liveLabel').textContent = 'En vivo';
-    secondsSinceUpdate = 0;
-    document.getElementById('lastUpdate').textContent = 'actualizado ahora';
-    updateAll();
-  }catch(err){
-    console.error(err);
-    document.getElementById('errorBanner').style.display = 'block';
-    document.getElementById('liveDot').classList.add('off');
-    document.getElementById('liveLabel').textContent = 'sin conexión';
+    ALL=await fetchData();
+    applyRange(currentRange);
+    document.getElementById('errorBanner').style.display='none';
+    document.getElementById('sbLastUpdate').textContent=
+      'actualizado '+new Date().toLocaleTimeString('es-UY',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }catch(e){
+    console.error(e);
+    document.getElementById('errorBanner').style.display='block';
+    document.getElementById('sbLastUpdate').textContent='sin conexión';
   }finally{
-    setTimeout(()=>btn.classList.remove('spin'), 700);
+    setTimeout(()=>btn.classList.remove('spin'),600);
   }
 }
-document.getElementById('refreshBtn').addEventListener('click', loadAndRender);
 
+function applyRange(range){
+  currentRange=range;
+  const {f,t,label}=getRange(range);
+  FROM=f;TO=t;
+  document.getElementById('rangeLabel').textContent=label;
+  renderAll();
+}
+
+function applyCustomRange(){
+  applyRange('custom');
+}
+
+/* ===================================================================
+   SIDEBAR WIRING
+=================================================================== */
+document.querySelectorAll('.sb-btn[data-range]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.sb-btn[data-range]').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const r=btn.dataset.range;
+    if(r==='custom'){
+      document.getElementById('customPanel').classList.toggle('open');
+    }else{
+      document.getElementById('customPanel').classList.remove('open');
+      applyRange(r);
+    }
+  });
+});
+document.getElementById('refreshBtn').addEventListener('click',refresh);
+
+/* ===================================================================
+   LIVE TICKER — updates "actualizado hace Ns" every second
+=================================================================== */
+let lastFetch=Date.now();
 setInterval(()=>{
-  secondsSinceUpdate++;
-  if (secondsSinceUpdate >= AUTO_REFRESH_SECONDS){
-    loadAndRender();
-  } else if (document.getElementById('liveDot').classList.contains('off') === false){
-    document.getElementById('lastUpdate').textContent = `actualizado hace ${secondsSinceUpdate}s`;
-  }
-}, 1000);
+  const s=Math.round((Date.now()-lastFetch)/1000);
+  document.getElementById('sbLastUpdate').textContent=
+    s<5?'hace un momento':s<60?`hace ${s}s`:`hace ${Math.round(s/60)}min`;
+},1000);
 
-loadAndRender();
+/* ===================================================================
+   BOOT
+=================================================================== */
+refresh();
+const autoTimer=setInterval(async()=>{
+  await refresh();
+  lastFetch=Date.now();
+},AUTO_MS);
 </script>
 </body>
 </html>
+HTMLEOF
